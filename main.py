@@ -29,10 +29,33 @@ def task_1():  # Решение первой задачи
     return html
 
 
+def task_2():  # Решение второй задачи
+    '''
+    Для решения второй задачи получаем все словари из списка,
+    затем берём из каждого словаря ключ и значение,
+    ключ помещаем в открывающий и закрывающий тег,
+    а значение вставляем между ними.
+    '''
+
+    # Загружаем из json все данные
+    with open('source_2_3.json') as f:
+        json_data = json.load(f)
+
+    html = ''
+    for i in json_data:
+        for tag, value in i.items():
+            html += f"<{tag}>{value}</{tag}>"
+    write(html)
+    return html
+
+
 class NameTestCase(unittest.TestCase):
     def test_task_1(self):
         html = task_1()
         self.assertEqual(html, '<h1>Title #1</h1><p>Hello, World 1!</p><h1>Title #2</h1><p>Hello, World 2!</p>')
+    def test_task_2(self):
+        html = task_2()
+        self.assertEqual(html, '<h3>Title #1</h3><div>Hello, World 1!</div><h3>Title #2</h3><div>Hello, World 2!</div>')
 
 
 unittest.main()
