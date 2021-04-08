@@ -49,6 +49,35 @@ def task_2():  # Решение второй задачи
     return html
 
 
+def task_3():  # Решение третьей задачи
+    '''
+    Решение третьей задачи базируется на решении второй.
+    Добавлена проверка, если данные лежат в списке словарей,
+    то этот список оборачивается в открывающие и закрывающие теги ul,
+    затем каждый словарь оборачивается в теги li, иначе (если данные изначально
+    были представлены как словари), оборачиваем словари в теги li.
+    '''
+
+    # Загружаем из json все данные
+    with open('source_2_3.json') as f:
+        json_data = json.load(f)
+
+    if type(json_data) == list:
+        html = '<ul>'
+        for i in json_data:
+            html += '<li>'
+            for tag, value in i.items():
+                html += f"<{tag}>{value}</{tag}>"
+            html += '</li>'
+        html += '</ul>'
+    else:
+        html += '<li>'
+        for tag, value in json_data.items():
+            html += f"<{tag}>{value}</{tag}>"
+        html += '</li>'
+    write(html)
+
+
 class NameTestCase(unittest.TestCase):
     def test_task_1(self):
         html = task_1()
