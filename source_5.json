@@ -1,0 +1,4 @@
+{
+  "p.my-class#my-id#id2": "hello",
+  "div.my-class1.my-class2": "example<a>asd</a>"
+}
