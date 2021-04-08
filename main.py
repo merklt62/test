@@ -78,6 +78,54 @@ def task_3():  # Решение третьей задачи
     write(html)
 
 
+def task_4():  # Решение четвёртой задачи
+    '''
+    Решение базируется на решении третьей задачи.
+    Добавляем проверку на нахождение списка в значении словаря,
+    если в значении лежит список, открываем тег полученный из ключа этого
+    значения и, так как это писок, оборачиваем его в тег ul, получаем словари
+    из этого списка и оборачиваем их в теги li, далее записываем ключи как
+    открывающие и закрывающие теги и между ними помещаем полученное значение,
+    когда словари в этом списке закончатся, то закрываем теги li, ul и тег,
+    полученный из ключа.
+    '''
+
+    # Загружаем из json все данные
+    with open('source_4.json') as f:
+        json_data = json.load(f)
+
+    if type(json_data) == list:
+        html = '<ul>'
+        for list_item in json_data:
+            html += '<li>'
+            for tag, value in list_item.items():
+                if type(value) == list:
+                    html += f"<{tag}><ul>"
+                    for i in value:
+                        html += '<li>'
+                        for t, v in i.items():
+                            html += f"<{t}>{v}</{t}>"
+                    html += f"</li></ul></{tag}>"
+                else:
+                    html += f"<{tag}>{value}</{tag}>"
+            html += '</li>'
+        html += '</ul>'
+    else:
+        html += '<li>'
+        for tag, value in json_data.items():
+            if type(value) == list:
+                html += f"<{tag}><ul>"
+                for i in value:
+                    html += '<li>'
+                    for t, v in i.items():
+                        html += f"<{t}>{v}</{t}>"
+                html += f"</li></ul></{tag}>"
+            else:
+                html += f"<{tag}>{value}</{tag}>"
+        html += '</li>'
+    write(html)
+
+
 class NameTestCase(unittest.TestCase):
     def test_task_1(self):
         html = task_1()
